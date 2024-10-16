@@ -1,3 +1,15 @@
 kuma
 ====
-A boring lua project bundler
+A boring lua bundler and runtime
+
+Requirements
+------------
+In order to build or use kuma you need lune.
+
+Installation
+------------
+Kuma may be used in two different ways: as a library and as a cli.
+To use Kuma as a library, download Kuma.luau and import it in your source file.
+To build Kuma, Enter the following command:
+
+	lune build Cli.luau -o <OUTPUT>
