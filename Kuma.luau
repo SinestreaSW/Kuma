@@ -72,18 +72,23 @@ function Kuma.CreateObjectTree(Directory)
 end
 
 function Kuma.Bundle(Options)
-    Options["EnvironmentName"] = Options["EnvironmentName"] or "Kuma" 
-    
     if not Options["Source"] or not Options["Output"] then
         error("Please specify source or output")
         return
     end
 
     local ObjectTree = Kuma.CreateObjectTree(Options["Source"])
-    return string.gsub(Kuma["BundleScriptTemplate"], "${([A-Za-z_][A-Za-z0-9_]*)}", {
+    local BundleScriptTemplate = Options["BundleScriptTemplate"] or Kuma["BundleScriptTemplate"]
+
+    return string.gsub(BundleScriptTemplate, "${([A-Za-z_][A-Za-z0-9_]*)}", {
         ["ObjectTree"] = LuaEncode(ObjectTree, {["Prettify"] = true}),
-        ["EnvironmentName"] = Options["EnvironmentName"]
+        ["EnvironmentName"] = Options["EnvironmentName"] or "Kuma"
     })
+end
+
+if string.sub(_VERSION, 1, 4) ~= "Lune" then
+    error("Please run this script on Lune (https://lune-org.github.io)")
+    return
 end
 
 return Kuma
